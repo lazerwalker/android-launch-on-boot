@@ -1,17 +1,24 @@
 package com.lazerwalker.launchonboot;
 
+import android.app.Activity;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.util.Log;
+
+import static android.content.Intent.ACTION_BOOT_COMPLETED;
 
 public class BootReceiver extends BroadcastReceiver {
     @Override
     public void onReceive(Context context, Intent intent) {
-        if (Intent.ACTION_BOOT_COMPLETED.equals(intent.getAction())) {
-            // TODO: What's the best way to parameterizze getting the Activity class?
-            Intent serviceIntent = new Intent(context, MainActivity.class);
+        Log.d("LaunchOnBoot", "In OnReceive");
+        if (ACTION_BOOT_COMPLETED.equals(intent.getAction())) {
+            Log.d("LaunchOnBoot", "Correct message trying");
 
-            context.startService(serviceIntent);
+            // TODO: Try launching a Service that does nothing but launch the Activity?
+            Intent serviceIntent = new Intent(context, MainActivity.class);
+            serviceIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            context.startActivity(serviceIntent);
         }
     }
 }
